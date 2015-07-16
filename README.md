@@ -1,6 +1,8 @@
 # jQuery.spHtmlEditor
 **SharePoint Rich Text Editor jQuery Plugin**
 
+Matthew Stark / Making Things Work 
+
 Loads the SharePoint RTE onto a page using JavaScript.  Plugin works on both Office 365 and On-Premises versions of SharePoint.
 
 Tested on: 
@@ -90,6 +92,6 @@ $("#rteeditor").spHtmlEditor("gethtml");
 ```
 
 ##Further Reading
-
+Initial Release: http://makingthings.work/sharepoint-rte-jquery-plugin/
 
 
