@@ -15,7 +15,7 @@ Tested on:
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
 
-<script src="https://spgoo.sharepoint.com/SiteAssets/jQuery.spHtmlEditor.js" ></script>;
+<script src="/SiteAssets/jQuery.spHtmlEditor.js" ></script>;
 ```
 
 2) Insert HTML Element to host the RTE content:
