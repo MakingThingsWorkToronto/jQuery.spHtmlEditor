@@ -136,30 +136,58 @@
     };
 
     function load_o365(ready, path) {
-        var p = path || "https://cdn.sharepointonline.com/16290/_layouts/15/16.0.4208.1226/";
-        if ((typeof (g_all_modules) == "undefined"
-			|| typeof (g_all_modules["ms.rte.js"]) == "undefined")
-			&& $("#msrtejs").length == 0)
-            $('<script id="msrtejs" type="text/javascript" src="' + p + 'ms.rte.js">' + '</' + 'script>').appendTo("body");
-
-        ExecuteOrDelayUntilScriptLoaded(function () {
-            load_onprem(ready, p);
-        }, "ms.rte.js");
-
+        var p = path || o365layouts(["init.js"]);
+        load_onprem(ready, p);
     }
+
+	function o365layouts(a){
+		if(a && $.isArray(a)) {
+			var dir = "";
+			$.each(a, function(i, script) {
+				var el = $("script[src*='" + script +"']");
+				if(el.length > 0) {
+					var src = el.attr("src"),
+						pos = src.lastIndexOf("/");
+					dir = src.substr(0, pos+1);
+					return false;
+				}
+			});
+			return dir;
+		}
+		return "/_layouts/15/";
+	}
 
     function load_onprem(ready, path) {
 
-        var p = path || "/_layouts/15/";
+        var p = path || "/_layouts/15/",
+			spVersion = parseInt(_spPageContextInfo.siteClientTag.match(/\$\$(\d{2})\./i)[1], 10);
+			
+        if (spVersion >= 16 && (typeof (g_all_modules) == "undefined"
+            || typeof (g_all_modules["ms.rte.js"]) == "undefined")
+            && $("#msrtejs").length == 0) {
+            
+            $('<script id="msrtejs" type="text/javascript" src="' + p + 'ms.rte.js">' + '</' + 'script>').appendTo("body");
 
-        if ((typeof (g_all_modules) == "undefined"
-			|| typeof (g_all_modules["sp.ui.rte.js"]) == "undefined")
-			&& $("#spuirtejs").length == 0)
-            $('<script id="spuirtejs" type="text/javascript" src="' + p + 'sp.ui.rte.js">' + '</' + 'script>').appendTo("body");
+	        ExecuteOrDelayUntilScriptLoaded(function () {
+	        	loadUi();	
+	        }, "ms.rte.js");
 
-        ExecuteOrDelayUntilScriptLoaded(function () {
-            ready();
-        }, "sp.ui.rte.js");
+        } else {
+        	loadUi();
+        }
+
+		function loadUi(){
+
+			if ((typeof (g_all_modules) == "undefined"
+				|| typeof (g_all_modules["sp.ui.rte.js"]) == "undefined")
+				&& $("#spuirtejs").length == 0)
+	            $('<script id="spuirtejs" type="text/javascript" src="' + p + 'sp.ui.rte.js">' + '</' + 'script>').appendTo("body");
+	
+	        ExecuteOrDelayUntilScriptLoaded(function () {
+	            ready();
+	        }, "sp.ui.rte.js");
+	        
+		}
 
     }
 
@@ -187,6 +215,11 @@
         }
 
         _ribbonStartInit("Ribbon.Read", false, null);
+
+		SP.SOD.executeOrDelayUntilScriptLoaded(function() {      
+		    if (!SP.Ribbon.PageManager.get_instance().get_ribbon())
+		        _ribbonStartInit("Ribbon.Read", false, null);
+		}, 'sp.ribbon.js');
 
     }
 

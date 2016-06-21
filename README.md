@@ -26,15 +26,15 @@ Tested on:
 <div id="rteeditor"><p>RTE Content</p></div>
 ```
 
-3) Load the Rich Text Area after page has loaded:
+3) Load the Rich Text Area after page has loaded (ensure SP.js is referenced on the page):
 
 ```javascript
 (function($) {
-
-   $(function() {
-     $("#rteeditor").spHtmlEditor();
-   });
-
+   ExecuteOrDelayUntilScriptLoaded(function(){
+      $(function() {
+        $("#rteeditor").spHtmlEditor();
+      });
+   },'sp.js');
 })(jQuery);
 
 ```
