@@ -7,7 +7,7 @@ Loads the SharePoint RTE onto a page using JavaScript.  Plugin works on both Off
 
 Tested on: 
 - Office 365 
-- SharePoint 2013
+- SharePoint 2013, SharePoint 2016
 - jQuery 2.1.4
 
 ##Loading Plugin:
@@ -26,7 +26,7 @@ Tested on:
 <div id="rteeditor"><p>RTE Content</p></div>
 ```
 
-3) Load the Rich Text Area after page has loaded (ensure SP.js is referenced on the page):
+3) Load the Rich Text Area after page has loaded (ensure init.js & SP.js are referenced on the page):
 
 ```javascript
 (function($) {
